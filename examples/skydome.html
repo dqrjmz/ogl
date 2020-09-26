@@ -12,7 +12,7 @@
 <body>
     <div class="Info">Skydome. Image credit <a href="https://www.flickr.com/photos/charlesashaw/6264765128" target="_blank">charlesashaw</a>.</div>
     <script type="module">
-        import {Renderer, Geometry, Program, Mesh, Camera, Transform, Texture, Sphere, Orbit} from '../src/index.mjs';
+        import {Renderer, Geometry, Program, Mesh, Camera, Transform, Texture, Sphere, Orbit} from '../src/index.js';
         
         const vertex = /* glsl */ `
             precision highp float;
@@ -55,9 +55,11 @@
             document.body.appendChild(gl.canvas);
             gl.clearColor(1, 1, 1, 1);
 
+            // 视图矩阵
             const camera = new Camera(gl, {fov: 45});
             camera.position.set(0, 0, 8);
 
+            // 正射投影矩阵
             const controls = new Orbit(camera, {
                 enablePan: false,
                 enableZoom: false,
@@ -65,6 +67,7 @@
 
             function resize() {
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                // 透视矩阵
                 camera.perspective({aspect: gl.canvas.width / gl.canvas.height});
             }
             window.addEventListener('resize', resize, false);
@@ -81,13 +84,13 @@
             // Use Sphere geometry to render equirectangular textures
             const geometry = new Sphere(gl, {radius: 1, widthSegments: 64});
 
+            // 着色器对象
             const program = new Program(gl, {
                 vertex,
                 fragment,
                 uniforms: {
                     tMap: {value: texture},
                 },
-
                 // Need inside of sphere to be visible
                 cullFace: null,
             });

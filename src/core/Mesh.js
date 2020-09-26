@@ -19,9 +19,13 @@ export class Mesh extends Transform {
 
         // Override sorting to force an order
         this.renderOrder = renderOrder;
+        // 模型视图矩阵
         this.modelViewMatrix = new Mat4();
+        // 法线矩阵
         this.normalMatrix = new Mat3();
+        // 渲染前
         this.beforeRenderCallbacks = [];
+        // 渲染后
         this.afterRenderCallbacks = [];
     }
 

@@ -12,7 +12,9 @@ export class Camera extends Transform {
 
         Object.assign(this, { near, far, fov, aspect, left, right, bottom, top, zoom });
 
+        // 投影矩阵
         this.projectionMatrix = new Mat4();
+        // 视图矩阵
         this.viewMatrix = new Mat4();
         this.projectionViewMatrix = new Mat4();
         this.worldPosition = new Vec3();

@@ -79,6 +79,8 @@ export class Program {
         // Get active uniform locations
         this.uniformLocations = new Map();
         let numUniforms = gl.getProgramParameter(this.program, gl.ACTIVE_UNIFORMS);
+
+        
         for (let uIndex = 0; uIndex < numUniforms; uIndex++) {
             let uniform = gl.getActiveUniform(this.program, uIndex);
             this.uniformLocations.set(uniform, gl.getUniformLocation(this.program, uniform.name));
@@ -108,6 +110,9 @@ export class Program {
             locations[location] = attribute.name;
             this.attributeLocations.set(attribute, location);
         }
+
+        console.log(this.attributeLocations,this.uniformLocations);
+
         this.attributeOrder = locations.join('');
     }
 

@@ -41,7 +41,7 @@ export class Renderer {
 
         // Attempt WebGL2 unless forced to 1, if not supported fallback to WebGL1
         if (webgl === 2) this.gl = canvas.getContext('webgl2', attributes);
-        this.isWebgl2 = !!this.gl;
+        this.isWebgl2 = !!this.gl; //是否使webgl2
         if (!this.gl) {
             this.gl = canvas.getContext('webgl', attributes) || canvas.getContext('experimental-webgl', attributes);
         }
@@ -73,7 +73,7 @@ export class Renderer {
         // store requested extensions
         this.extensions = {};
 
-        // Initialise extra format types
+        // Initialise extra format types  开启webgl拓展
         if (this.isWebgl2) {
             this.getExtension('EXT_color_buffer_float');
             this.getExtension('OES_texture_float_linear');
@@ -203,7 +203,7 @@ export class Renderer {
         // if webgl2 function supported, return func bound to gl context
         if (webgl2Func && this.gl[webgl2Func]) return this.gl[webgl2Func].bind(this.gl);
 
-        // fetch extension once only
+        // fetch extension once only 开启webgl扩展
         if (!this.extensions[extension]) {
             this.extensions[extension] = this.gl.getExtension(extension);
         }
@@ -304,6 +304,13 @@ export class Renderer {
         return renderList;
     }
 
+    /**
+     * 渲染器开始渲染
+     * 1. 场景
+     * 2. 照相机
+     * 3. 离线创建的帧缓存
+     * 4. 
+     */
     render({ scene, camera, target = null, update = true, sort = true, frustumCull = true, clear }) {
         if (target === null) {
             // make sure no render target bound so draws to canvas

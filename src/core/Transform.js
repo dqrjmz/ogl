@@ -3,6 +3,7 @@ import { Quat } from '../math/Quat.js';
 import { Mat4 } from '../math/Mat4.js';
 import { Euler } from '../math/Euler.js';
 
+// 变换
 export class Transform {
     constructor() {
         this.parent = null;
@@ -73,6 +74,11 @@ export class Transform {
         this.rotation.fromQuaternion(this.quaternion);
     }
 
+    /**
+     * 上方向
+     * @param {*} target 
+     * @param {*} invert 
+     */
     lookAt(target, invert = false) {
         if (invert) this.matrix.lookAt(this.position, target, this.up);
         else this.matrix.lookAt(target, this.position, this.up);

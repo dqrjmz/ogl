@@ -97,15 +97,24 @@ export class Geometry {
         }
     }
 
+    /**
+     * 更新attribute属性,重新给缓冲区绑定数据
+     * @param {*} attr 
+     */
     updateAttribute(attr) {
         if (this.glState.boundBuffer !== attr.buffer) {
             this.gl.bindBuffer(attr.target, attr.buffer);
             this.glState.boundBuffer = attr.buffer;
         }
+        // 绑定缓存数据
         this.gl.bufferData(attr.target, attr.data, this.gl.STATIC_DRAW);
         attr.needsUpdate = false;
     }
 
+    /**
+     * 设置索引缓存
+     * @param {*} value 
+     */
     setIndex(value) {
         this.addAttribute('index', value);
     }
@@ -163,6 +172,11 @@ export class Geometry {
         if (this.attributes.index) this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.attributes.index.buffer);
     }
 
+    /**
+     * 绘制
+     * 1. 着色器对象
+     * 2. 绘制几何类型
+     */
     draw({ program, mode = this.gl.TRIANGLES }) {
         if (this.gl.renderer.currentGeometry !== `${this.id}_${program.attributeOrder}`) {
             if (!this.VAOs[program.attributeOrder]) this.createVAO(program);
